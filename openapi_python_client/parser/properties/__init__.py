@@ -51,7 +51,7 @@ def _string_based_property(
 ) -> StringProperty | DateProperty | DateTimeProperty | FileProperty | PropertyError:
     """Construct a Property from the type "string" """
     string_format = data.schema_format
-    python_name = utils.PythonIdentifier(value=name, prefix=config.field_prefix)
+    python_name = utils.PythonIdentifier(value=name, prefix=config.field_prefix, skip_snake_case=True)
     if string_format == "date-time":
         return DateTimeProperty.build(
             name=name,

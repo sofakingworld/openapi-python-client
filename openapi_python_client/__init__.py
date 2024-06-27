@@ -4,6 +4,8 @@ import json
 import mimetypes
 import shutil
 import subprocess
+import pathlib
+
 from importlib.metadata import version
 from pathlib import Path
 from subprocess import CalledProcessError
@@ -79,7 +81,9 @@ class Project:
         if config.meta_type == MetaType.NONE:
             self.package_dir = self.project_dir
         else:
-            self.package_dir = self.project_dir / self.package_name
+            self.package_dir = Path.cwd() / self.project_dir
+            self.project_dir = Path.cwd() / self.package_name
+
 
         self.package_description: str = utils.remove_string_escapes(
             f"A client library for accessing {self.openapi.title}"
@@ -110,7 +114,7 @@ class Project:
             shutil.rmtree(self.project_dir, ignore_errors=True)
 
         try:
-            self.project_dir.mkdir()
+            pathlib.Path(self.project_dir).mkdir()
         except FileExistsError:
             return [GeneratorError(detail="Directory already exists. Delete it or use the --overwrite option.")]
         self._create_package()
@@ -156,7 +160,7 @@ class Project:
 
     def _create_package(self) -> None:
         if self.package_dir != self.project_dir:
-            self.package_dir.mkdir()
+            self.package_dir.mkdir(exist_ok=True)
         # Package __init__.py
         package_init = self.package_dir / "__init__.py"
 
