@@ -160,7 +160,7 @@ class Project:
 
     def _create_package(self) -> None:
         if self.package_dir != self.project_dir:
-            self.package_dir.mkdir(exist_ok=True)
+            self.package_dir.mkdir(parents=True, exist_ok=True)
         # Package __init__.py
         package_init = self.package_dir / "__init__.py"
 
