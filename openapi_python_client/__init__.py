@@ -82,7 +82,7 @@ class Project:
             self.package_dir = self.project_dir
         else:
             self.package_dir = Path.cwd() / self.project_dir
-            self.project_dir = Path.cwd() / self.package_name
+            self.project_dir = Path.cwd() / self.project_dir
 
 
         self.package_description: str = utils.remove_string_escapes(
