@@ -114,7 +114,7 @@ class Project:
             shutil.rmtree(self.project_dir, ignore_errors=True)
 
         try:
-            pathlib.Path(self.project_dir).mkdir()
+            pathlib.Path(self.project_dir).mkdir(parents=True)
         except FileExistsError:
             return [GeneratorError(detail="Directory already exists. Delete it or use the --overwrite option.")]
         self._create_package()
