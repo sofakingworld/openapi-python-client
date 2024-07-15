@@ -79,7 +79,7 @@ class ListProperty(PropertyProtocol):
                 required=required,
                 default=None,
                 inner_property=inner_prop,
-                python_name=utils.PythonIdentifier(value=name, prefix=config.field_prefix),
+                python_name=utils.PythonIdentifier(value=name, prefix=config.field_prefix, skip_snake_case=True),
                 description=data.description,
                 example=data.example,
             ),
