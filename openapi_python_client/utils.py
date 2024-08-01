@@ -32,11 +32,11 @@ class ClassName(str):
     """A PascalCase string which has been validated / transformed into a valid class name for Python"""
 
     def __new__(cls, value: str, prefix: str) -> ClassName:
-        new_value = fix_reserved_words(pascal_case(sanitize(value)))
+        new_value = fix_reserved_words((sanitize(value)))
 
         if not new_value.isidentifier():
             value = f"{prefix}{new_value}"
-            new_value = fix_reserved_words(pascal_case(sanitize(value)))
+            new_value = fix_reserved_words((sanitize(value)))
         return str.__new__(cls, new_value)
 
     def __deepcopy__(self, _: Any) -> ClassName:
