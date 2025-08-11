@@ -147,7 +147,6 @@ def property_from_data(  # noqa: PLR0911
     roots = roots or set()
     name = utils.remove_string_escapes(name)
     if isinstance(data, oai.Reference):
-        print(data)
         return _property_from_ref(
             name=name,
             required=required,
