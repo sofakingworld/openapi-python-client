@@ -39,7 +39,7 @@ def parse_reference_path(ref_path_raw: str) -> Union[ReferencePath, ParseError]:
         - https://swagger.io/docs/specification/using-ref/
     """
     parsed = urlparse(ref_path_raw)
-    if parsed.scheme or parsed.path:
+    if parsed.scheme:
         return ParseError(detail=f"Remote references such as {ref_path_raw} are not supported yet.")
     return cast(ReferencePath, parsed.fragment)
 
@@ -122,7 +122,6 @@ def update_schemas_with_data(
         process_properties=False,
         roots={ref_path},
     )
-
     if isinstance(prop, PropertyError):
         prop.detail = f"{prop.header}: {prop.detail}"
         prop.header = f"Unable to parse schema {ref_path}"
