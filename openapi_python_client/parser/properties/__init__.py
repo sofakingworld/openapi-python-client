@@ -33,6 +33,7 @@ from .list_property import ListProperty
 from .model_property import ModelProperty, process_model
 from .none import NoneProperty
 from .property import Property
+from .remote_model_property import RemoteModelProperty
 from .schemas import (
     Class,
     Parameters,
@@ -104,10 +105,16 @@ def _property_from_ref(
         return PropertyError(data=data, detail=ref_path.detail), schemas
     existing = schemas.classes_by_reference.get(ref_path)
     if not existing:
-        return (
-            PropertyError(data=data, detail="Could not find reference in parsed models or enums"),
-            schemas,
+        existing = RemoteModelProperty.build(
+            name=data.ref,
+            required=required,
+            python_name=utils.PythonIdentifier(value=name, prefix=config.field_prefix, skip_snake_case=True),
+            config=config,
         )
+        # return (
+        #     PropertyError(data=data, detail="Could not find reference in parsed models or enums"),
+        #     schemas,
+        # )
 
     default = existing.convert_value(parent.default) if parent is not None else None
     if isinstance(default, PropertyError):

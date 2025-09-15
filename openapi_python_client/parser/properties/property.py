@@ -16,6 +16,7 @@ from .int import IntProperty
 from .list_property import ListProperty
 from .model_property import ModelProperty
 from .none import NoneProperty
+from .remote_model_property import RemoteModelProperty
 from .string import StringProperty
 from .union import UnionProperty
 
@@ -34,4 +35,5 @@ Property: TypeAlias = Union[
     NoneProperty,
     StringProperty,
     UnionProperty,
+    RemoteModelProperty,
 ]
