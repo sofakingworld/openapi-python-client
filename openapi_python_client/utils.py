@@ -16,8 +16,6 @@ class PythonIdentifier(str):
 
     def __new__(cls, value: str, prefix: str, skip_snake_case: bool = False) -> PythonIdentifier:
         new_value = sanitize(value)
-        if not skip_snake_case:
-            new_value = snake_case(new_value)
         new_value = fix_reserved_words(new_value)
 
         if not new_value.isidentifier() or value.startswith("_"):
