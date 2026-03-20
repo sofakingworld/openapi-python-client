@@ -56,7 +56,11 @@ class UnionProperty(PropertyProtocol):
 
         for i, sub_prop_data in enumerate(chain(data.anyOf, data.oneOf, type_list_data)):
             sub_prop, schemas = property_from_data(
-                name=f"{name}_type_{i}",
+                # Убрал генерацию числового имени свойства
+                # Приводило к багу в СПР, когда структура данных вся по себе имела свойство nullable
+                # В названии получалось {Model}_type_0
+                # name=f"{name}_type_{i}",
+                name=name,
                 required=True,
                 data=sub_prop_data,
                 schemas=schemas,

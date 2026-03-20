@@ -56,7 +56,7 @@ class RemoteModelProperty(PropertyProtocol):
         return f".{self.module_path}.models.{self.class_info.module_name} import {self.class_info.name}"
     
     def get_lazy_imports(self, *, prefix: str) -> set[str]:
-        return {f"from {prefix}{self.self_import}"}
+        return {f"from data_structures.{self.module_path}.models.{self.class_info.module_name} import {self.class_info.name}"}
 
     def get_base_type_string(self, *, quoted: bool = False) -> str:
         return f'"{self.class_info.name}"' if quoted else self.class_info.name
@@ -70,6 +70,8 @@ def _get_module_path(path: str) -> str:
     creditRegistry.ds.json -> 
     creditRegistry
     """
-
+    # Специфика СПР
+    # Удаляем расширение ds.json
     ref = urlparse(path)
-    return ref.path.split("/")[-1].split(".")[0]
+    path = f"{ref.path.replace('.ds.json','').replace('/', '.')}"
+    return path.lstrip('.') if path.startswith('.') else path
