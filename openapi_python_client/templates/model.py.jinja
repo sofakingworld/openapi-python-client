@@ -13,11 +13,11 @@ import json
 
 from ..types import UNSET, Unset
 
-{% for relative in model.relative_imports %}
+{% for relative in model.relative_imports | sort %}
 {{ relative }}
 {% endfor %}
 
-{% for lazy_import in model.lazy_imports %}
+{% for lazy_import in model.lazy_imports | sort %}
 {{ lazy_import }}
 {% endfor %}
 
@@ -121,7 +121,7 @@ return field_dict
 {% endmacro %}
 
     def to_dict(self) -> Dict[str, Any]:
-    {% for lazy_import in model.lazy_imports %}
+    {% for lazy_import in model.lazy_imports | sort %}
         {{ lazy_import }}
     {% endfor %}
         {{ _to_dict() | indent(8) }}
@@ -133,7 +133,7 @@ return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-    {% for lazy_import in model.lazy_imports %}
+    {% for lazy_import in model.lazy_imports | sort %}
         {{ lazy_import }}
     {% endfor %}
         d = src_dict.copy()
@@ -162,7 +162,7 @@ return field_dict
         {% import "property_templates/" + model.additional_properties.template as prop_template %}
 
 {% if model.additional_properties.lazy_imports %}
-    {% for lazy_import in model.additional_properties.lazy_imports %}
+    {% for lazy_import in model.additional_properties.lazy_imports | sort %}
         {{ lazy_import }}
     {% endfor %}
 {% endif %}
